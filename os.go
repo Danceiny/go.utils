@@ -27,6 +27,13 @@ func GetEnvOrDefault(k string, dv interface{}) interface{} {
         switch dv.(type) {
         case string:
             return v
+        case bool:
+            var ret bool
+            ret, err = strconv.ParseBool(v)
+            if err == nil {
+                return ret
+            }
+            break
         case int:
             var ret int
             ret, err = strconv.Atoi(v)
