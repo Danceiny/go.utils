@@ -36,6 +36,33 @@ func CastPrimitiveSliceInplace(items *[]interface{}, t reflect.Kind) {
     }
 }
 
+func CastPrimitiveIntSlice(items []interface{}, t reflect.Kind) []int {
+    CastPrimitiveSliceInplace(&items, reflect.Int)
+    arr := make([]int, len(items))
+    for i, item := range items {
+        arr[i] = item.(int)
+    }
+    return arr
+}
+
+func CastPrimitiveInt64Slice(items []interface{}, t reflect.Kind) []int64 {
+    CastPrimitiveSliceInplace(&items, reflect.Int64)
+    arr := make([]int64, len(items))
+    for i, item := range items {
+        arr[i] = item.(int64)
+    }
+    return arr
+}
+
+func CastPrimitiveStringSlice(items []interface{}, t reflect.Kind) []string {
+    CastPrimitiveSliceInplace(&items, reflect.Int64)
+    arr := make([]string, len(items))
+    for i, item := range items {
+        arr[i] = item.(string)
+    }
+    return arr
+}
+
 func Cast2Int(v interface{}) int {
     var ret int
     var err error
