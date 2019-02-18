@@ -4,7 +4,12 @@ import (
     "fmt"
     "reflect"
     "strconv"
+    "unsafe"
 )
+
+func TransferInterfaceLike(v unsafe.Pointer, dv interface{}) {
+
+}
 
 // todo: support more type
 func TransferInterfaces(items *[]interface{}, t reflect.Kind) {

@@ -1,9 +1,7 @@
 package go_utils
 
 import (
-    "errors"
     "fmt"
-    "github.com/Danceiny/go.fastjson"
     "os"
     "reflect"
     "strconv"
@@ -67,28 +65,6 @@ func GetEnvOrDefault(k string, dv interface{}) interface{} {
             ret, err = strconv.ParseFloat(v, 32)
             if err == nil {
                 return ret
-            }
-            break
-        case map[string]interface{}:
-            ret := make(map[string]interface{})
-            err = fastjson.FastJson.UnmarshalFromString(v, &ret)
-            if err == nil {
-                return ret
-            }
-        case fastjson.JSONObject:
-            ret := fastjson.ParseObject(v)
-            if ret == nil {
-                err = errors.New("parse to json failed")
-            } else {
-                return *ret
-            }
-            break
-        case fastjson.JSONArray:
-            ret := fastjson.ParseArray(v)
-            if ret == nil {
-                err = errors.New("parse to json failed")
-            } else {
-                return *ret
             }
             break
         default:
