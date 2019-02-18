@@ -12,18 +12,24 @@ func TransferInterfaceLike(v unsafe.Pointer, dv interface{}) {
 }
 
 // todo: support more type
+func TransferInterface(item *interface{}, t reflect.Kind) {
+    switch t {
+    case reflect.Int:
+        *item = Cast2Int(*item)
+        break
+    case reflect.String:
+        *item = Cast2String(*item)
+        break
+    case reflect.Bool:
+    case reflect.Float64:
+    case reflect.Float32:
+    }
+}
+
 func TransferInterfaces(items *[]interface{}, t reflect.Kind) {
-    var v interface{}
     for i, item := range *items {
-        switch t {
-        case reflect.Int:
-            v = Cast2Int(item)
-            break
-        case reflect.String:
-            v = Cast2String(item)
-            break
-        }
-        (*items)[i] = v
+        TransferInterface(&item, t)
+        (*items)[i] = item
     }
 }
 
@@ -37,6 +43,18 @@ func Cast2Int(v interface{}) int {
         return int(v.(int64))
     case int32:
         return int(v.(int32))
+    case uint32:
+        return int(v.(uint32))
+    case uint64:
+        return int(v.(uint64))
+    case int8:
+        return int(v.(int8))
+    case int16:
+        return int(v.(int16))
+    case uint8:
+        return int(v.(uint8))
+    case uint16:
+        return int(v.(uint16))
     default:
         ret, err = strconv.Atoi(fmt.Sprint(v))
         if err == nil {
@@ -57,4 +75,23 @@ func Cast2String(v interface{}) string {
     default:
         return fmt.Sprint(v)
     }
+}
+
+func Case2Bool(v interface{}) bool {
+    switch v.(type) {
+    case bool:
+        return v.(bool)
+    case string:
+        switch v.(string) {
+        case "1", "t", "T", "true", "TRUE", "True":
+            return true
+        case "0", "f", "F", "false", "FALSE", "False":
+            return false
+        }
+    case int, uint, int64, uint64, float64, float32, int8, uint8, int16, uint16, int32, uint32:
+        return Cast2Int(v) == 0
+    default:
+        return true
+    }
+    return false
 }
