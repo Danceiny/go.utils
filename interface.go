@@ -36,17 +36,49 @@ func CastPrimitiveSliceInplace(items *[]interface{}, t reflect.Kind) {
     }
 }
 
-func CastPrimitiveIntSlice(items []interface{}, t reflect.Kind) []int {
-    CastPrimitiveSliceInplace(&items, reflect.Int)
-    arr := make([]int, len(items))
-    for i, item := range items {
-        arr[i] = item.(int)
+func CastPrimitiveSlice(items []interface{}, t reflect.Kind) interface{} {
+    CastPrimitiveSliceInplace(&items, t)
+    switch t {
+    case reflect.Int:
+        return toInts(items)
+    case reflect.String:
+        return toStrings(items)
+    case reflect.Bool:
+        return toBools(items)
+    case reflect.Int64:
+        return toInt64s(items)
+    case reflect.Float64:
+        return toFloat64s(items)
+    default:
+        return items
+    }
+}
+
+func toStrings(items []interface{}) []string {
+    arr := make([]string, len(items))
+    for i, o := range items {
+        arr[i] = o.(string)
     }
     return arr
 }
 
-func CastPrimitiveInt64Slice(items []interface{}, t reflect.Kind) []int64 {
-    CastPrimitiveSliceInplace(&items, reflect.Int64)
+func toBools(items []interface{}) []bool {
+    arr := make([]bool, len(items))
+    for i, o := range items {
+        arr[i] = o.(bool)
+    }
+    return arr
+}
+
+func toFloat64s(items []interface{}) []float64 {
+    arr := make([]float64, len(items))
+    for i, o := range items {
+        arr[i] = o.(float64)
+    }
+    return arr
+}
+
+func toInt64s(items []interface{}) []int64 {
     arr := make([]int64, len(items))
     for i, item := range items {
         arr[i] = item.(int64)
@@ -54,11 +86,10 @@ func CastPrimitiveInt64Slice(items []interface{}, t reflect.Kind) []int64 {
     return arr
 }
 
-func CastPrimitiveStringSlice(items []interface{}, t reflect.Kind) []string {
-    CastPrimitiveSliceInplace(&items, reflect.Int64)
-    arr := make([]string, len(items))
+func toInts(items []interface{}) []int {
+    arr := make([]int, len(items))
     for i, item := range items {
-        arr[i] = item.(string)
+        arr[i] = item.(int)
     }
     return arr
 }
