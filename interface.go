@@ -12,7 +12,7 @@ func TransferInterfaceLike(v unsafe.Pointer, dv interface{}) {
 }
 
 // todo: support more type
-func TransferInterface(item *interface{}, t reflect.Kind) {
+func CastPrimitiveValueInplace(item *interface{}, t reflect.Kind) {
     switch t {
     case reflect.Int:
         *item = Cast2Int(*item)
@@ -26,9 +26,9 @@ func TransferInterface(item *interface{}, t reflect.Kind) {
     }
 }
 
-func TransferInterfaces(items *[]interface{}, t reflect.Kind) {
+func CastPrimitiveSliceInplace(items *[]interface{}, t reflect.Kind) {
     for i, item := range *items {
-        TransferInterface(&item, t)
+        CastPrimitiveValueInplace(&item, t)
         (*items)[i] = item
     }
 }
