@@ -107,10 +107,10 @@ func Cast2Float64(v interface{}) float64 {
         return float64(v.(float32))
     case string:
         ret, err := strconv.ParseFloat(v.(string), 64)
-        if err != nil {
+        if err == nil {
             return ret
         }
-    case int, uint, int64, uint64, float32, int8, uint8, int16, uint16, int32, uint32:
+    case int, uint, int64, uint64, int8, uint8, int16, uint16, int32, uint32:
         return float64(Cast2Int(v))
     }
     return 0
@@ -124,11 +124,11 @@ func Cast2Float32(v interface{}) float32 {
         return v.(float32)
     case string:
         ret, err := strconv.ParseFloat(v.(string), 32)
-        if err != nil {
+        if err == nil {
             return float32(ret)
         }
 
-    case int, uint, int64, uint64, float32, int8, uint8, int16, uint16, int32, uint32:
+    case int, uint, int64, uint64, int8, uint8, int16, uint16, int32, uint32:
         return float32(Cast2Int(v))
     }
     return 0
