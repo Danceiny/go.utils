@@ -40,21 +40,21 @@ func CastPrimitiveSlice(items []interface{}, t reflect.Kind) interface{} {
     CastPrimitiveSliceInplace(&items, t)
     switch t {
     case reflect.Int:
-        return toInts(items)
+        return ToInts(items)
     case reflect.String:
-        return toStrings(items)
+        return ToStrings(items)
     case reflect.Bool:
-        return toBools(items)
+        return ToBools(items)
     case reflect.Int64:
-        return toInt64s(items)
+        return ToInt64s(items)
     case reflect.Float64:
-        return toFloat64s(items)
+        return ToFloat64s(items)
     default:
         return items
     }
 }
 
-func toStrings(items []interface{}) []string {
+func ToStrings(items []interface{}) []string {
     arr := make([]string, len(items))
     for i, o := range items {
         arr[i] = o.(string)
@@ -62,7 +62,7 @@ func toStrings(items []interface{}) []string {
     return arr
 }
 
-func toBools(items []interface{}) []bool {
+func ToBools(items []interface{}) []bool {
     arr := make([]bool, len(items))
     for i, o := range items {
         arr[i] = o.(bool)
@@ -70,7 +70,7 @@ func toBools(items []interface{}) []bool {
     return arr
 }
 
-func toFloat64s(items []interface{}) []float64 {
+func ToFloat64s(items []interface{}) []float64 {
     arr := make([]float64, len(items))
     for i, o := range items {
         arr[i] = o.(float64)
@@ -78,7 +78,7 @@ func toFloat64s(items []interface{}) []float64 {
     return arr
 }
 
-func toInt64s(items []interface{}) []int64 {
+func ToInt64s(items []interface{}) []int64 {
     arr := make([]int64, len(items))
     for i, item := range items {
         arr[i] = item.(int64)
@@ -86,7 +86,7 @@ func toInt64s(items []interface{}) []int64 {
     return arr
 }
 
-func toInts(items []interface{}) []int {
+func ToInts(items []interface{}) []int {
     arr := make([]int, len(items))
     for i, item := range items {
         arr[i] = item.(int)
